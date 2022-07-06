@@ -1,0 +1,29 @@
+version: '3.1'
+
+services:
+
+  dbback:
+    image: schickling/mysql-backup-s3
+    restart: always
+    environment:
+      MYSQL_HOST: db
+      MYSQLDUMP_DATABASE: chep_mismatch
+      MYSQL_USER: backups
+      MYSQL_PASSWORD: 7_lq|jZ18G1^&5]
+      S3_ACCESS_KEY_ID : 417076792658
+      S3_SECRET_ACCESS_KEY : oZxU+vSs/SfRx4mNrhICsIMYKwHDurd2mGK9GE8Q  
+      S3_BUCKET : chep_backups
+      S3_PREFIX : mismatch-backup
+      SCHEDULE : "@every 1m"
+
+
+  db:
+    image: mysql:5.7
+    restart: always
+    environment:
+      MYSQL_DATABASE: chep_mismatch
+      MYSQL_USER: backups
+      MYSQL_PASSWORD: 7_lq|jZ18G1^&5]
+      MYSQL_RANDOM_ROOT_PASSWORD: '1'
+      
+ 
