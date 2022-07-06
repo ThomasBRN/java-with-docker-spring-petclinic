@@ -1,0 +1,11 @@
+# syntax=docker/dockerfile:1
+FROM gradle:6.8.0-jdk11 as builder
+gradle build -x test
+
+RUN mvn -f ./pom.xml clean package
+
+FROM openjdk:11-jdk
+COPY --from=builder build/libs/spring-petclinic*.jar spring-petclinic.jar
+CMD ["java","-jar","spring-petclinic.jar"]
+
+()
