@@ -10,7 +10,7 @@ on:
     branches: [ main ] 
 
 jobs:
-  release:
+  build:
     runs-on: ubuntu-latest
     steps:
       - name: Login to Docker Hub
