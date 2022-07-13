@@ -1,73 +1,40 @@
 # This is a basic workflow to help you get started with Actions
 
- 
 
 name: docker-compose-up
 
- 
+
 
 # Controls when the workflow will run
 
 on:
-
   # Triggers the workflow on push or pull request events but only for the "main" branch
-
   push:
-
-    branches: [ "*-deploy" ]
-
- 
-
+    branches: [ "main" ]
   # Allows you to run this workflow manually from the Actions tab
-
   workflow_dispatch:
-
- 
-
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
-
 jobs:
-
   # This workflow contains a single job called "build"
-
   build:
-
-    # The type of runner that the job will run on
-
+    # The type of runner that the job will run o
     runs-on: ubuntu-latest
-
- 
-
     # Steps represent a sequence of tasks that will be executed as part of the job
 
     steps:
 
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-
       - uses: actions/checkout@v3
-
- 
-
       - name: Start Deployment
-
         uses: TapTap21/docker-remote-deployment-action@v1.0
-
         with:
-
           remote_docker_host: tbarreno@test.bcntec.dev
-
           ssh_private_key: ${{ secrets.DOCKER_SSH_PRIVATE_KEY }}
-
           ssh_public_key: ${{ secrets.DOCKER_SSH_PUBLIC_KEY }}
-
           stack_file_name: docker-compose.yml
-
-          #docker_login_password: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
-
-          #docker_login_user: ${{ secrets.DOCKER_HUB_USERNAME }}
-
+          docker_login_password: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
+          docker_login_user:  ${{ secrets.DOCKER_HUB_USERNAME }}
           #docker_login_registry : ${{ steps.login-ecr.outputs.registry }}
-
           args: up -d
 
    

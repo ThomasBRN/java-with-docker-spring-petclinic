@@ -1,27 +1,31 @@
-version: '3.1'
+version: "2.2"
 
 services:
-
-  dbback:
-    image: schickling/mysql-backup-s3
-    restart: always
-    environment:
-      MYSQL_HOST: db
-      MYSQLDUMP_DATABASE: chep_mismatch
-      MYSQL_USER: backups
-      MYSQL_PASSWORD: 7_lq|jZ18G1^&5]
-      S3_ACCESS_KEY_ID : 417076792658
-      S3_SECRET_ACCESS_KEY : oZxU+vSs/SfRx4mNrhICsIMYKwHDurd2mGK9GE8Q  
-      S3_BUCKET : chep_backups
-      S3_PREFIX : mismatch-backup
-      SCHEDULE : "@every 1m"
-
-  db:
+  petclinic:
+    image: thomasbrn/java-with-docker-spring-petclinic
+    ports:
+      - "8080:8080"
+    networks:
+      tbarreno:
+        aliases:
+          - web
+  mysql:
     image: mysql:5.7
-    restart: always
+    ports:
+      - "3306:3306"
     environment:
-      MYSQL_DATABASE: chep_mismatch
-      MYSQL_USER: backups
-      MYSQL_PASSWORD: 7_lq|jZ18G1^&5]
-      MYSQL_RANDOM_ROOT_PASSWORD: '1'
-      
+      - MYSQL_ROOT_PASSWORD=
+      - MYSQL_ALLOW_EMPTY_PASSWORD=true
+      - MYSQL_USER=petclinic
+      - MYSQL_PASSWORD=petclinic
+      - MYSQL_DATABASE=petclinic
+    networks:
+      tbarreno:
+        aliases:
+          - db
+networks:
+  tbarreno:
+    driver: bridge
+    ipam:
+      driver: default
+
