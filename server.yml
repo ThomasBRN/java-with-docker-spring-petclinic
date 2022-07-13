@@ -1,0 +1,18 @@
+name: Deploy
+
+on:
+  push:
+    branches: [ master ]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - uses: ThomasBRN/tbarreno@master
+      name: docker-compose Remote Deployment
+      with:
+        ssh_host: ThomasBRN
+        ssh_private_key: ${{ secrets.SSH_USERNAME }}
+        ssh_user: ${{ secrets.ThomasBRN }}
