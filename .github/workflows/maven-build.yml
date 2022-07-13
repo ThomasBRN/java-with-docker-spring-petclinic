@@ -22,6 +22,17 @@ jobs:
           username: ${{ secrets.DOCKER_HUB_USERNAME }}
           password: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
 
-
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - uses: actions/checkout@v3
+      - name: Start Deployment
+        uses: TapTap21/docker-remote-deployment-action@v1.0
+        with:
+          remote_docker_host: tbarreno@test.bcntec.dev
+          ssh_private_key: ${{ secrets.DOCKER_SSH_PRIVATE_KEY }}
+          ssh_public_key: ${{ secrets.DOCKER_SSH_PUBLIC_KEY }}
+          stack_file_name: docker-compose.yml
+          docker_login_password: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
+          docker_login_user:  ${{ secrets.DOCKER_HUB_USERNAME }}
+          args: up -d
 
 
