@@ -60,7 +60,7 @@ jobs:
 
           ssh_public_key: ${{ secrets.DOCKER_SSH_PUBLIC_KEY }}
 
-          stack_file_name: docker-compose-chep-mysql-backup.yml
+          stack_file_name: docker-compose.yml
 
           #docker_login_password: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
 
